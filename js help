@@ -1,0 +1,33 @@
+
+else if (game === "Among Us") {
+    title.innerText =
+        "Among Us";
+    gameDetails.innerText =
+        "Among Us";
+
+    frame.src =
+        "https://amongusplay.online/";
+
+    gameDescription.innerText ="";
+    gameDeveloper.innerText = "";
+    gameDeveloper.href = ''
+    gameGenre.innerText ="";
+    gameRelease.innerText ="";
+    howToPlay.innerText = "";
+    document.title = "";
+    gameControls.innerHTML = `
+    <p>
+    • <br>
+    • <br>
+    • <br>
+    • <br>
+    • <br>
+    • <br>
+    • 
+    </p>
+    `;
+     gameIcon.innerHTML = `
+        <img class="game-icon-img-work" src="assets/game-thumbnails/OSK.jpg">
+    `;
+
+}

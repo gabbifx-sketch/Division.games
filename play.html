@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Division - Play Game</title>
+
+    <link
+        rel="stylesheet"
+        href="./assets/style/play.css"
+    >
+ <link rel="icon" href="assets/img/ChatGPT Image Sep 7, 2026, 01_48_33 AM.png">
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================
+         HEADER
+    ========================================== -->
+
+    <header class="play-header">
+
+        <a
+            href="./index.html"
+            class="back-button"
+        >
+
+            <span class="back-arrow">
+                ←
+            </span>
+
+            <span>
+                Back
+            </span>
+
+        </a>
+
+
+        <div class="division-logo">
+
+            <span class="logo-dot"></span>
+
+            <span>
+                DIVISION
+            </span>
+
+        </div>
+
+
+        <button
+            class="header-fullscreen"
+            onclick="openFullscreen()"
+        >
+
+            ⛶
+
+            <span>
+                Fullscreen
+            </span>
+
+        </button>
+
+    </header>
+
+
+
+    <!-- =========================================
+         MAIN
+    ========================================== -->
+
+    <main class="play-container">
+
+
+        <!-- GAME TITLE -->
+
+        <div class="game-top">
+
+            <div>
+
+                <p class="playing-text">
+                    NOW PLAYING
+                </p>
+
+                <h1 id="title">
+                    Loading...
+                </h1>
+
+            </div>
+
+        </div>
+
+
+        
+
+
+        <!-- =========================================
+             GAME BOX
+        ========================================== -->
+
+        <section
+            class="game-box"
+            id="gameBox"
+        >
+
+
+            <!-- =====================================
+                 GAME LOADING OVERLAY
+            ====================================== -->
+
+            <div
+                class="loading-screen"
+                id="loadingScreen"
+            >
+
+                <div class="loading-content">
+
+
+                    <div class="division-loader">
+
+                        <div class="loader-ring"></div>
+
+                        <div class="loader-logo">
+                            D
+                        </div>
+
+                    </div>
+
+
+                    <h2 id="loadingGameName">
+                        Preparing game...
+                    </h2>
+
+
+                    <p id="loadingStatus">
+                        Loading game...
+                    </p>
+
+
+                    <div class="loading-bar">
+
+                        <div class="loading-progress"></div>
+
+                    </div>
+
+
+                    <span class="loading-tip">
+                        Get ready to play 
+                    </span>
+                    <span class="loading-tip lttwo">
+                        Watch 2 - 3 ads before playing game
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =====================================
+                 GAME IFRAME
+            ====================================== -->
+
+            <iframe
+                id="gameFrame"
+                title="Division Game"
+                allow="fullscreen; autoplay; gamepad; clipboard-read; clipboard-write"
+                allowfullscreen
+                scrolling="no"
+            ></iframe>
+
+
+
+            <!-- =====================================
+                 IFRAME FULLSCREEN BUTTON
+            ====================================== -->
+
+            <button
+                class="iframe-fullscreen"
+                onclick="openFullscreen()"
+                title="Fullscreen"
+            >
+
+                ⛶
+
+            </button>
+
+
+        </section>
+
+
+
+        <!-- =========================================
+             GAME INFORMATION
+        ========================================== -->
+
+        <section class="game-information">
+
+
+            <div class="game-details">
+
+
+                  <div class="game-icon">
+    <span id="game-icon-image"></span>
+</div>
+
+
+
+
+                <div class="game-details-text">
+
+                    <h2 id="game-detials-txt">
+                        Loading...
+                    </h2>
+
+                    <p>
+                        Play this game on Division
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+            <button
+                class="bottom-fullscreen"
+                onclick="openFullscreen()"
+            >
+
+                ⛶ Fullscreen
+
+            </button>
+
+
+        </section>
+
+
+
+        <!-- =========================================
+             GAME DESCRIPTION
+        ========================================== -->
+
+        <section class="game-description">
+
+
+            <h2>
+                About the Game
+            </h2>
+
+
+            <p id="game-description-text">
+                Loading game description...
+            </p>
+
+
+
+            <!-- GAME META -->
+
+            <div class="game-meta">
+
+
+                <div class="meta-item">
+
+                    <span class="meta-label">
+                        Developer
+                    </span>
+
+                    <a style="color: rgb(201, 199, 196); " href="" id="game-developer" target="_blank">
+                        Loading...
+                    </a>
+
+                </div>
+
+
+                <div class="meta-item">
+
+                    <span class="meta-label">
+                        Genre
+                    </span>
+
+                    <span id="game-genre">
+                        Loading...
+                    </span>
+
+                </div>
+
+
+                <div class="meta-item">
+
+                    <span class="meta-label">
+                        Release
+                    </span>
+
+                    <span id="game-platform">
+                        Web Browser
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- HOW TO PLAY -->
+
+            <div class="how-to-play">
+
+
+                <h2>
+                    How to Play
+                </h2>
+
+
+                <p id="how-to-play-text">
+                    Loading instructions...
+                </p>
+
+
+            </div>
+
+
+
+            <!-- CONTROLS -->
+
+            <div class="game-controls">
+
+
+                <h2>
+                    Controls
+                </h2>
+
+
+                <div class="controls-list">
+                    <span class="game-controls-txt">
+
+                    </span>
+            </div>
+</div>
+
+<!-- GAMEPLAY VIDEO -->
+
+<section class="gameplay-section">
+
+    <h2 id="gameplayTitle">
+        Gameplay : Wheelie Bike 2
+    </h2>
+
+    <div class="gameplay-video">
+
+        <iframe
+            id="gameplayVideo"
+            src=""
+            title="Gameplay Video"
+            allowfullscreen>
+        </iframe>
+
+    </div>
+
+</section>
+
+        </section>
+
+
+
+        <!-- NOTICE -->
+
+        <div class="game-notice">
+
+            <strong>
+                Game not loading?
+            </strong>
+
+            <span>
+                Try refreshing the page or opening the game again.
+            </span>
+
+        </div>
+
+
+    </main>
+
+
+
+    <!-- =========================================
+         PLAY JAVASCRIPT
+    ========================================== -->
+
+    <script src="./assets/script/play.js"></script>
+
+
+</body>
+
+</html>
