@@ -424,6 +424,35 @@ else if (game === "Vortex 9") {
 
 }
 
+else if (game === "Level Devil") {
+    title.innerText =
+        "Level Devil";
+    gameDetails.innerText =
+        "Level Devil";
+
+    frame.src =
+        "https://level-devil.org/play/index.html";
+
+    gameDescription.innerText ="Level Devil is a challenging 2D platformer built around unexpected traps and surprise changes. The goal is simple: guide your character through each level and reach the exit door. The difficulty comes from hidden spikes, disappearing floors, moving platforms, changing walls, and other surprises that can catch you off guard. With more than 240 levels, the game relies heavily on timing, observation, and trial-and-error. It also features a local two-player mode for two people sharing the same computer.";
+    gameDeveloper.innerText = "Unept";
+    gameDeveloper.href = 'https://playleveldevil.com/'
+    gameGenre.innerText ="Platformer / Puzzle / Casual / Action";
+    gameRelease.innerText ="2024 (mobile), March 25, 2025 (Steam)";
+    howToPlay.innerText = "Move through each level, avoid unexpected traps, jump across gaps, and reach the exit door. Pay attention to how the level changes as you move because seemingly safe platforms can suddenly become dangerous. Each failed attempt helps you learn the level and prepare for your next try.";
+    document.title = "Leveil Devil";
+    gameControls.innerHTML = `
+    <p>
+    • A / Left Arrow — Move left<br>
+    • D / Right Arrow — Move right<br>
+    • W / Up Arrow / Space — Jump<br>
+    </p>
+    `;
+     gameIcon.innerHTML = `
+        <img class="game-icon-img-work" src="assets/game-thumbnails/level-devil.webp">
+    `;
+
+}
+
 else if (game === "Venge") {
     title.innerText =
         "Venge";
@@ -1174,7 +1203,8 @@ const gameplayVideos = {
     "Ragdoll Archers": "XvHEFGzq81YlTpwB",
     "Wheelie Bike": "JVqOCC7XURMIMmpV",
     "Eagle Craft": "XsuHOEFDWno",
-    "Punchers": "llMEkXQPnX0",
+    "Punchers": "UREBglHcbz0",
+    "Level Devil": "9GCu5swRgKU",
 
 };
 const gameplaySection =

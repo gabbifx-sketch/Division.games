@@ -88,6 +88,12 @@ const displayHomeGames = [
 },
 
 {
+    title: "Level Devil",
+    id: "Level Devil",
+    img: "assets/game-thumbnails/level-devil.webp",
+    categories: ["Action", "Multiplayer"]
+},
+{
     title: "1v1.lol",
     id: "1v1.lol",
     img: "assets/game-thumbnails/cover-1585728351086.avif",
@@ -607,35 +613,28 @@ if (searchInput) {
 }
 
 
-// =========================================
-// CLOSE SEARCH
-// =========================================
 
-if (searchClose) {
+const gameSearchLinks = document.querySelectorAll(".game-search-link");
 
-    searchClose.addEventListener(
-        "click",
-        function() {
+gameSearchLinks.forEach(link => {
+    link.addEventListener("click", () => {
+        const gameName = link.dataset.game;
 
-            window.location.hash = "";
+        gameSearch.value = gameName;
 
-            if (searchInput) {
+        gameSearch.dispatchEvent(
+            new Event("input", { bubbles: true })
+        );
 
-                searchInput.value = "";
-
-            }
-
-            if (searchResults) {
-
-                searchResults.innerHTML = "";
-
-            }
-
-        }
-    );
-
-}
-
+        setTimeout(() => {
+            gameSearch.focus();
+            gameSearch.setSelectionRange(
+                gameSearch.value.length,
+                gameSearch.value.length
+            );
+        }, 100);
+    });
+});
 
 // =========================================
 // ESC KEY
@@ -731,3 +730,33 @@ displayAllGames();
 console.log(
     "Division home system working"
 );
+
+const footerCategories = document.querySelectorAll(".footer-category");
+
+footerCategories.forEach(link => {
+    link.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        const category = link.dataset.category;
+
+        // Open the existing search overlay
+        window.location.hash = "search-overlay";
+
+        // Put the category name into search
+        gameSearch.value = category;
+
+        // Trigger your existing search system
+        gameSearch.dispatchEvent(
+            new Event("input", { bubbles: true })
+        );
+
+        // Focus search
+        setTimeout(() => {
+            gameSearch.focus();
+            gameSearch.setSelectionRange(
+                gameSearch.value.length,
+                gameSearch.value.length
+            );
+        }, 100);
+    });
+});
