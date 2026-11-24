@@ -1455,3 +1455,18 @@ function loadMoreGames(gameName) {
 // START
 
 loadMoreGames(game);
+
+// Player favourites and recently played
+(async function(){
+ const client=window.divisionSupabase,button=document.getElementById("favorite-game-button"),message=document.getElementById("favorite-game-message");
+ if(!client||!button||!game)return;
+ const {data:s}=await client.auth.getSession(),user=s?.session?.user;
+ const {data:g,error:ge}=await client.from("games").select("id,title").eq("title",game).eq("is_published",true).maybeSingle();
+ if(ge||!g){message.textContent="This game is not linked to the player catalogue yet.";return;}
+ if(!user){button.disabled=false;button.addEventListener("click",()=>location.href="./auth.html");message.textContent="Sign in to save this game.";return;}
+ const {error:he}=await client.from("recently_played").upsert({user_id:user.id,game_id:g.id,last_played_at:new Date().toISOString()},{onConflict:"user_id,game_id"});
+ if(he)console.warn("Recent history:",he.message);
+ async function sync(){const {data,error}=await client.from("favorites").select("game_id").eq("user_id",user.id).eq("game_id",g.id).maybeSingle();if(error){message.textContent="Could not check favourite status.";button.disabled=true;return;}const saved=!!data;button.textContent=saved?"♥ Saved to favourites":"♡ Add to favourites";button.setAttribute("aria-pressed",String(saved));button.disabled=false;}
+ button.addEventListener("click",async()=>{button.disabled=true;const {data:old,error}=await client.from("favorites").select("game_id").eq("user_id",user.id).eq("game_id",g.id).maybeSingle();if(error){message.textContent=error.message;button.disabled=false;return;}const result=old?await client.from("favorites").delete().eq("user_id",user.id).eq("game_id",g.id):await client.from("favorites").insert({user_id:user.id,game_id:g.id});if(result.error){message.textContent=result.error.message;button.disabled=false;return;}await sync();message.textContent=old?"Removed from favourites.":"Added to favourites.";});
+ await sync();
+})();
