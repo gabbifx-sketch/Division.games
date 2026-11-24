@@ -2483,3 +2483,31 @@ header {
   .category-card,
   .category-card img { transition: none; }
 }
+
+
+/* Homepage catalogue heading */
+.catalog-heading {
+  width: min(1440px, calc(100% - 40px));
+  margin: 24px auto 0;
+  padding: 0 24px;
+}
+.catalog-heading h1 {
+  color: var(--division-ink);
+  font-size: clamp(23px, 3vw, 30px);
+  font-weight: 850;
+  letter-spacing: -.7px;
+}
+.catalog-heading p {
+  margin-top: 6px;
+  color: var(--division-muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+@media (max-width: 640px) {
+  .catalog-heading {
+    width: 100%;
+    margin-top: 18px;
+    padding: 0 12px;
+  }
+  .catalog-heading p { font-size: 13px; }
+}
