@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#111111">
+<title>Admin Dashboard - DIVISION</title>
+<link rel="stylesheet" href="./assets/style/admin.css">
+</head>
+<body>
+<header class="admin-topbar">
+<a class="brand" href="./index.html">DIVISION <span>ADMIN</span></a>
+<div class="top-actions"><a href="./index.html">View site</a><button id="admin-signout" type="button">Sign out</button></div>
+</header>
+<main class="admin-shell">
+<aside class="sidebar">
+<div class="sidebar-label">WORKSPACE</div>
+<a class="nav-link active" href="#overview">Overview</a>
+<a class="nav-link" href="#games">Games</a>
+<div class="sidebar-note">ADMIN ACCESS<br><span>Changes are protected by Supabase permissions.</span></div>
+</aside>
+<section class="admin-content">
+<div id="admin-loading" class="notice">Checking your admin access…</div>
+<div id="admin-denied" class="notice error" hidden>
+<h2>Admin access required</h2><p>This account does not have DIVISION administrator permissions.</p><a href="./profile.html">Return to profile</a>
+</div>
+<div id="admin-app" hidden>
+<section id="overview" class="page-heading">
+<div><p class="eyebrow">CONTROL CENTER</p><h1>Dashboard</h1><p class="muted">Manage the DIVISION games catalogue.</p></div>
+<button class="primary-button" id="new-game-button" type="button">＋ Add game</button>
+</section>
+<div class="stats-grid">
+<article class="stat-card"><span>Total games</span><strong id="stat-total">—</strong></article>
+<article class="stat-card"><span>Published</span><strong id="stat-published">—</strong></article>
+<article class="stat-card"><span>Drafts</span><strong id="stat-drafts">—</strong></article>
+<article class="stat-card"><span>Total plays</span><strong id="stat-plays">—</strong></article>
+</div>
+<section id="games" class="panel">
+<div class="panel-heading"><div><p class="eyebrow">CATALOGUE</p><h2>Games</h2></div><input id="game-search" type="search" placeholder="Search games…" aria-label="Search games"></div>
+<div id="admin-message" class="inline-message" role="status"></div>
+<div class="table-wrap"><table><thead><tr><th>Game</th><th>Status</th><th>Plays</th><th>Actions</th></tr></thead><tbody id="games-table"><tr><td colspan="4">Loading games…</td></tr></tbody></table></div>
+</section>
+</div>
+</section>
+</main>
+<div id="game-modal" class="modal" hidden>
+<div class="modal-backdrop" data-close-modal></div>
+<section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+<div class="modal-heading"><div><p class="eyebrow">GAME DETAILS</p><h2 id="modal-title">Add a game</h2></div><button class="icon-button" type="button" data-close-modal aria-label="Close">×</button></div>
+<form id="game-form">
+<input id="game-id" type="hidden">
+<label for="game-title">Game title *</label><input id="game-title" maxlength="120" required>
+<label for="game-slug">Slug *</label><input id="game-slug" maxlength="140" pattern="[a-z0-9]+(?:-[a-z0-9]+)*" required placeholder="my-new-game">
+<label for="game-embed">Game embed URL *</label><input id="game-embed" type="url" required placeholder="https://example.com/embed/game">
+<label for="game-thumbnail">Thumbnail image URL</label><input id="game-thumbnail" type="url" placeholder="https://…">
+<label for="game-category">Category</label><select id="game-category"><option value="">No category</option></select>
+<label for="game-description">Description</label><textarea id="game-description" rows="3"></textarea>
+<label for="game-instructions">Instructions</label><textarea id="game-instructions" rows="2"></textarea>
+<label for="game-controls">Controls</label><input id="game-controls">
+<label for="game-developer">Developer</label><input id="game-developer">
+<label for="game-video">Gameplay video URL</label><input id="game-video" type="url">
+<label for="game-tags">Tags (comma separated)</label><input id="game-tags" placeholder="arcade, action, racing">
+<div class="check-grid">
+<label><input id="game-featured" type="checkbox"> Featured</label>
+<label><input id="game-popular" type="checkbox"> Popular</label>
+<label><input id="game-recommended" type="checkbox"> Recommended</label>
+<label><input id="game-multiplayer" type="checkbox"> Multiplayer</label>
+<label><input id="game-published" type="checkbox"> Published</label>
+</div>
+<div class="form-actions"><button class="secondary-button" type="button" data-close-modal>Cancel</button><button class="primary-button" id="save-game" type="submit">Save game</button></div>
+</form>
+</section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./assets/script/supabase-client.js"></script>
+<script src="./assets/script/admin.js"></script>
+</body>
+</html>
