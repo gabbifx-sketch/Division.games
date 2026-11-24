@@ -15,36 +15,28 @@
 </header>
 <main class="auth-main">
 <section class="auth-card">
-<div class="auth-heading">
-<span class="eyebrow">YOUR DIVISION ACCOUNT</span>
-<h1 id="auth-title">Welcome back</h1>
-<p id="auth-subtitle">Sign in to continue to your games.</p>
-</div>
+<div class="auth-heading"><span class="eyebrow">YOUR DIVISION ACCOUNT</span><h1 id="auth-title">Welcome back</h1><p id="auth-subtitle">Sign in to continue to your games.</p></div>
 <div class="auth-tabs" role="tablist" aria-label="Account options">
 <button class="auth-tab active" id="login-tab" type="button" role="tab" aria-selected="true">Sign in</button>
 <button class="auth-tab" id="signup-tab" type="button" role="tab" aria-selected="false">Create account</button>
 </div>
 <form id="login-form" class="auth-form">
-<label for="login-email">Email address</label>
-<input id="login-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
-<label for="login-password">Password</label>
-<input id="login-password" name="password" type="password" autocomplete="current-password" placeholder="Your password" required>
+<label for="login-email">Email address</label><input id="login-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+<label for="login-password">Password</label><input id="login-password" name="password" type="password" autocomplete="current-password" placeholder="Your password" required>
 <button class="auth-submit" type="submit">Sign in</button>
 </form>
 <form id="signup-form" class="auth-form" hidden>
-<label for="signup-username">Username</label>
-<input id="signup-username" name="username" type="text" minlength="3" maxlength="20" pattern="[A-Za-z0-9_]+" autocomplete="username" placeholder="Choose a username" required>
+<label for="signup-first-name">First name</label><input id="signup-first-name" name="first_name" type="text" maxlength="50" autocomplete="given-name" placeholder="First name" required>
+<label for="signup-last-name">Last name</label><input id="signup-last-name" name="last_name" type="text" maxlength="50" autocomplete="family-name" placeholder="Last name" required>
+<label for="signup-username">Username</label><input id="signup-username" name="username" type="text" minlength="3" maxlength="20" pattern="[A-Za-z0-9_]+" autocomplete="username" placeholder="Choose a username" required>
 <small class="field-hint">3–20 characters. Letters, numbers and underscores only.</small>
-<label for="signup-email">Email address</label>
-<input id="signup-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
-<label for="signup-password">Password</label>
-<input id="signup-password" name="password" type="password" minlength="8" autocomplete="new-password" placeholder="At least 8 characters" required>
+<label for="signup-email">Email address</label><input id="signup-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+<label for="signup-password">Password</label><input id="signup-password" name="password" type="password" minlength="8" autocomplete="new-password" placeholder="At least 8 characters" required>
 <button class="auth-submit" type="submit">Create account</button>
 </form>
 <p id="auth-message" class="auth-message" role="status" aria-live="polite"></p>
 <div id="signed-in-panel" class="signed-in-panel" hidden>
-<p>You're already signed in as</p>
-<strong id="signed-in-email"></strong>
+<p>You're already signed in as</p><strong id="signed-in-email"></strong>
 <a class="auth-submit signed-in-link" href="./profile.html">View player profile</a>
 <a class="auth-secondary-link" href="./index.html">Continue to DIVISION</a>
 <button id="signout-button" class="signout-button" type="button">Sign out</button>
