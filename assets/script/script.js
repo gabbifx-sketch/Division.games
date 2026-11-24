@@ -2,273 +2,7 @@
 // DIVISION GAME DATA
 // =========================================
 
-const displayHomeGames = [
-{
-    title: "Fragen",
-    id: "Fragen",
-    img: "assets/game-thumbnails/1750532663_fragen.jpg",
-    categories: ["Action", "Shooting"]
-},
-
-{
-    title: "War the knight",
-    id: "War the knight: Battle",
-    img: "assets/game-thumbnails/1751394909_war-the-knights-battle-arena-swords-3d.jpg",
-    categories: ["Action", "Fighting"]
-},
-
-{
-    title: "Swag Flip",
-    id: "Swag Flip",
-    img: "assets/game-thumbnails/1762451886_swagflip.jpg",
-    categories: ["Action", "Arcade"]
-},
-
-{
-    title: "Funny City",
-    id: "Funny City",
-    img: "assets/game-thumbnails/1766118491_funny-city-gopniks.jpg",
-    categories: ["Action", "Simulation"]
-},
-
-{
-    title: "Among Us",
-    id: "Among Us",
-    img: "assets/game-thumbnails/among-us--online-edition_x.jpg",
-    categories: ["Multiplayer", "Action"]
-},
-
-{
-    title: "CoverSlap",
-    id: "CoverSlap",
-    img: "assets/game-thumbnails/coverslap.avif",
-    categories: ["Action", "Arcade"]
-},
-
-{
-    title: "Ev.io",
-    id: "Ev.io",
-    img: "assets/game-thumbnails/ev-io.avif",
-    categories: ["Shooting", "FPS", "Multiplayer"]
-},
-
-{
-    title: "Stickman Daimond",
-    id: "Stickman Daimond",
-    img: "assets/game-thumbnails/henry-stickman-daimond.webp",
-    categories: ["Action", "Adventure"]
-},
-
-{
-    title: "BoomNG.drive",
-    id: "BoomNG.drive",
-    img: "assets/game-thumbnails/igra-avarii-bum-drajv.jpg",
-    categories: ["Driving", "Simulation", "Cars"]
-},
-
-{
-    title: "Realistic Driving",
-    id: "Realistic Driving",
-    img: "assets/game-thumbnails/igra-realistichnyj-simulyator-vozhdeniya.jpg",
-    categories: ["Driving", "Cars", "Simulation"]
-},
-
-{
-    title: "Ladderrex",
-    id: "Ladderrex",
-    img: "assets/game-thumbnails/Ladderrex-512x384.jpg",
-    categories: ["Arcade", "Action"]
-},
-
-{
-    title: "Messanger",
-    id: "Messanger",
-    img: "assets/game-thumbnails/messanger.jpeg",
-    categories: ["Action", "Multiplayer"]
-},
-
-{
-    title: "Level Devil",
-    id: "Level Devil",
-    img: "assets/game-thumbnails/level-devil.webp",
-    categories: ["Action", "Multiplayer"]
-},
-{
-    title: "1v1.lol",
-    id: "1v1.lol",
-    img: "assets/game-thumbnails/cover-1585728351086.avif",
-    categories: ["Shooting", "FPS", "Multiplayer"]
-},
-
-{
-    title: "Racing Limits",
-    id: "Racing Limits",
-    img: "assets/game-thumbnails/racing-limits-game_.jpg",
-    categories: ["Racing", "Driving", "Cars"]
-},
-
-{
-    title: "Smash Karts",
-    id: "Smash Karts",
-    img: "assets/game-thumbnails/smashkarat.webp",
-    categories: ["Racing", "Driving", "Multiplayer"]
-},
-
-{
-    title: "Vortex 9",
-    id: "Vortex 9",
-    img: "assets/game-thumbnails/vortex-9_o.jpg",
-    categories: ["Shooting", "FPS", "Multiplayer"]
-},
-
-{
-    title: "Shell Shockers",
-    id: "Shell Shockers",
-    img: "assets/game-thumbnails/OSK.jpg",
-    categories: ["Shooting", "FPS", "Multiplayer"]
-},
-
-{
-    title: "Punchers",
-    id: "Punchers",
-    img: "assets/game-thumbnails/punchers.webp",
-    categories: ["Fighting", "Action"]
-},
-
-{
-    title: "DEADSHOT",
-    id: "DEADSHOT",
-    img: "assets/game-thumbnails/1759579759538-Deadshot IO.jpg",
-    categories: ["Shooting", "FPS", "Multiplayer"]
-},
-
-{
-    title: "Venge",
-    id: "Venge",
-    img: "assets/game-thumbnails/OIP-venge.webp",
-    categories: ["Shooting", "FPS", "Multiplayer"]
-},
-
-{
-    title: "Kour",
-    id: "Kour",
-    img: "assets/game-thumbnails/kour.io_.webp",
-    categories: ["Shooting", "FPS", "Multiplayer"]
-},
-
-{
-    title: "Krunker",
-    id: "Krunker",
-    img: "assets/game-thumbnails/1200x744_krunker-io.jpg",
-    categories: ["Shooting", "FPS", "Multiplayer"]
-},
-
-{
-    title: "Kirka",
-    id: "Kirka",
-    img: "assets/game-thumbnails/kirka-io.jpg",
-    categories: ["Shooting", "FPS", "Multiplayer"]
-},
-
-{
-    title: "SandStrike",
-    id: "SandStrike",
-    img: "assets/game-thumbnails/sandstrike-sandstrike-io.webp",
-    categories: ["Shooting", "FPS", "Multiplayer"]
-},
-
-{
-    title: "Voxiom",
-    id: "Voxiom",
-    img: "assets/game-thumbnails/voxiom.webp",
-    categories: ["Shooting", "FPS", "Multiplayer", "Building"]
-},
-
-{
-    title: "BattleDudes",
-    id: "BattleDudes",
-    img: "assets/game-thumbnails/battledudesio.webp",
-    categories: ["Shooting", "Multiplayer", "Action"]
-},
-
-{
-    title: "BuildRoyal",
-    id: "BuildRoyal",
-    img: "assets/game-thumbnails/build-royale-game-cover.webp",
-    categories: ["Shooting", "Building", "Multiplayer"]
-},
-
-{
-    title: "ZombsRoyal",
-    id: "ZombsRoyal",
-    img: "assets/game-thumbnails/ZOMBS-ROYALE-Game.jpg",
-    categories: ["Shooting", "Action", "Multiplayer"]
-},
-
-{
-    title: "NarrowOne",
-    id: "NarrowOne",
-    img: "assets/game-thumbnails/narrow-one-cover.avif",
-    categories: ["Action", "Multiplayer", "Sports"]
-},
-
-{
-    title: "Davo",
-    id: "Davo",
-    img: "assets/game-thumbnails/Davo-Unblocked-lg.webp",
-    categories: ["Action", "Arcade"]
-},
-
-{
-    title: "Ragdoll Archers",
-    id: "Ragdoll Archers",
-    img: "assets/game-thumbnails/ragdoll-archers.png",
-    categories: ["Shooting", "Action", "Arcade"]
-},
-
-{
-    title: "GTA Simulator",
-    id: "GTA Simulator",
-    img: "assets/game-thumbnails/OIP.jpg",
-    categories: ["Driving", "Cars", "Action", "Simulation"]
-},
-
-{
-    title: "Wheelie Bike",
-    id: "Wheelie Bike",
-    img: "assets/game-thumbnails/Wheelie-Bike.jpg",
-    categories: ["Driving", "Racing", "Motorcycle"]
-},
-
-{
-    title: "Eagle Craft",
-    id: "Eagle Craft",
-    img: "assets/game-thumbnails/OIP (1).jpg",
-    categories: ["Adventure", "Building", "Survival"]
-},
-
-{
-    title: "Car Parking",
-    id: "Car Parking",
-    img: "assets/game-thumbnails/igra-parkovka-mashin-advans.jpg",
-    categories: ["Driving", "Cars", "Simulation"]
-},
-
-{
-    title: "Ladybug Pregnant Caring",
-    id: "Ladybug Pregnant Caring",
-    img: "assets/game-thumbnails/Ladybug-Pregnant-Caring.jpg",
-    categories: ["Simulation", "Casual"]
-},
-
-{
-    title: "Drift King",
-    id: "Drift King",
-    img: "assets/game-thumbnails/OIP.webp",
-    categories: ["Driving", "Racing", "Cars"]
-}
-
-];
+let displayHomeGames = [];
 
 
 // =========================================
@@ -725,7 +459,40 @@ categoryCards.forEach(card => {
 // START DIVISION HOMEd
 // =========================================
 
-displayAllGames();
+async function loadPublishedGames() {
+    if (!window.divisionSupabase) {
+        console.error("DIVISION: Supabase is unavailable.");
+        if (gamesContainer) gamesContainer.textContent = "Games are temporarily unavailable. Please refresh.";
+        return;
+    }
+    try {
+        const [gameResult, categoryResult] = await Promise.all([
+            window.divisionSupabase.from("games")
+                .select("id,title,slug,thumbnail_url,category_id,tags,is_published")
+                .eq("is_published", true)
+                .order("created_at", { ascending: false }),
+            window.divisionSupabase.from("categories").select("id,name")
+        ]);
+        if (gameResult.error) throw gameResult.error;
+        if (categoryResult.error) throw categoryResult.error;
+        const categoryNames = new Map((categoryResult.data || []).map(item => [item.id, item.name]));
+        displayHomeGames = (gameResult.data || []).map(row => ({
+            title: row.title,
+            id: row.title,
+            slug: row.slug,
+            img: row.thumbnail_url || "",
+            categories: [
+                ...(row.category_id && categoryNames.has(row.category_id) ? [categoryNames.get(row.category_id)] : []),
+                ...(Array.isArray(row.tags) ? row.tags : [])
+            ]
+        }));
+        displayAllGames();
+    } catch (error) {
+        console.error("DIVISION: Could not load published games:", error);
+        if (gamesContainer) gamesContainer.textContent = "Could not load games. Please refresh the page.";
+    }
+}
+loadPublishedGames();
 
 console.log(
     "Division home system working"
