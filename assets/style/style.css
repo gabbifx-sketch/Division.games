@@ -2249,6 +2249,3 @@ button, a, input { -webkit-tap-highlight-color: transparent; }
   }
 }
 
-
-/* TEMPORARY DEPLOYMENT CHECK — remove when user requests */
-body { background: #ff0000 !important; }
