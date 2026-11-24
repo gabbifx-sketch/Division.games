@@ -1548,3 +1548,7 @@ body { width: 100%; min-width: 0; overflow-x: clip; }
 }
 
 .game-player-actions{display:flex;flex-direction:column;align-items:flex-start;gap:6px}.favorite-game-button{min-height:40px;padding:0 15px;border:1px solid #ff7a00;border-radius:8px;background:#21170f;color:#ffad62;font-size:12px;font-weight:800;cursor:pointer;white-space:nowrap}.favorite-game-button:hover{background:#342012}.favorite-game-button:disabled{opacity:.55;cursor:not-allowed}#favorite-game-message{max-width:190px;color:#999;font-size:10px;line-height:1.4}@media(max-width:600px){.favorite-game-button{font-size:11px;padding:0 11px}}
+
+
+/* Like and game statistics */
+.like-game-button{border:1px solid rgba(255,255,255,.18);background:transparent;color:inherit;border-radius:10px;padding:12px 16px;font:inherit;cursor:pointer}.like-game-button[aria-pressed="true"]{color:#ff6b6b;border-color:#ff6b6b}.like-game-button:disabled{opacity:.55;cursor:not-allowed}.game-stat{font-size:.9rem;color:#aaa}.game-stat strong{color:#fff}
