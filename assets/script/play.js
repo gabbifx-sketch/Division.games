@@ -1675,7 +1675,7 @@ loadMoreGames(game);
         async function loadComments() {
             list.textContent = "Loading comments...";
             const { data, error } = await client.from("comments")
-                .select("id,body,created_at,user_id,profiles(username)")
+                .select("id,body,created_at,user_id,profiles(username,first_name,last_name,avatar_url)")
                 .eq("game_id", gameRow.id).order("created_at", { ascending: false });
             if (error) throw error;
             countLabel.textContent = data.length + (data.length === 1 ? " comment" : " comments");
@@ -1692,12 +1692,29 @@ loadMoreGames(game);
                 card.className = "comment-card";
                 const top = document.createElement("div");
                 top.className = "comment-card-top";
+                const authorGroup = document.createElement("div");
+                authorGroup.className = "comment-author";
+                const avatar = document.createElement("span");
+                avatar.className = "comment-avatar";
+                if (comment.profiles?.avatar_url) {
+                    const avatarImage = document.createElement("img");
+                    avatarImage.src = comment.profiles.avatar_url;
+                    avatarImage.alt = "";
+                    avatar.appendChild(avatarImage);
+                } else {
+                    const first = (comment.profiles?.first_name || "").trim();
+                    const last = (comment.profiles?.last_name || "").trim();
+                    const username = (comment.profiles?.username || "DP").trim();
+                    avatar.textContent = ((first[0] || "") + (last[0] || "")).toUpperCase()
+                        || username.slice(0, 2).toUpperCase();
+                }
                 const author = document.createElement("strong");
                 author.textContent = comment.profiles?.username || "DIVISION player";
+                authorGroup.append(avatar, author);
                 const date = document.createElement("time");
                 date.dateTime = comment.created_at;
                 date.textContent = new Date(comment.created_at).toLocaleString();
-                top.append(author, date);
+                top.append(authorGroup, date);
                 const body = document.createElement("p");
                 body.className = "comment-body";
                 body.textContent = comment.body;
