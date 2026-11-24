@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090909">
+<title>Player - DIVISION</title>
+<link rel="icon" href="./assets/img/ChatGPT Image Sep 7, 2026, 01_48_33 AM.png">
+<link rel="stylesheet" href="./assets/style/player.css">
+</head>
+<body>
+<header class="player-header">
+<a class="player-brand" href="./index.html"><img src="./assets/img/division_logo.png" alt="DIVISION"></a>
+<a class="back-home" href="./index.html">Back to games</a>
+</header>
+<main class="player-main">
+<section class="public-profile-card">
+<div id="public-profile-state" class="profile-state">Loading player profile...</div>
+<div id="public-profile-content" hidden>
+<div class="public-identity">
+<div class="public-avatar" id="public-avatar"></div>
+<div class="public-identity-copy">
+<h1 id="public-name"></h1>
+<p id="public-username"></p>
+</div>
+</div>
+<p class="public-bio" id="public-bio"></p>
+<p class="joined-date" id="joined-date"></p>
+</div>
+</section>
+<section class="public-favorites">
+<h2>Favourite games</h2>
+<div id="public-favorite-games" class="player-game-grid"><p class="library-empty">Loading favourites...</p></div>
+</section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./assets/script/supabase-client.js"></script>
+<script src="./assets/script/player.js"></script>
+</body>
+</html>
