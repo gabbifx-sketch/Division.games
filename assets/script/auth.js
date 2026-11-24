@@ -43,11 +43,17 @@ loginForm.addEventListener("submit",async event=>{
  if(error){showMessage(error.message,"error");return;}if(data.user)showSignedIn(data.user);
 });
 signupForm.addEventListener("submit",async event=>{
- event.preventDefault();const username=signupForm.elements.username.value.trim(),email=signupForm.elements.email.value.trim(),password=signupForm.elements.password.value;
+ event.preventDefault();
+ const username=signupForm.elements.username.value.trim();
+ const first_name=signupForm.elements.first_name.value.trim();
+ const last_name=signupForm.elements.last_name.value.trim();
+ const email=signupForm.elements.email.value.trim();
+ const password=signupForm.elements.password.value;
+ if(!first_name||!last_name){showMessage("Enter your first and last name.","error");return;}
  if(!/^[A-Za-z0-9_]{3,20}$/.test(username)){showMessage("Username must be 3–20 characters using letters, numbers or underscores.","error");return;}
  if(password.length<8){showMessage("Use a password with at least 8 characters.","error");return;}
  setBusy(signupForm,true,"Creating account...");
- const {data,error}=await window.divisionSupabase.auth.signUp({email,password,options:{data:{username},emailRedirectTo:new URL("./index.html",window.location.href).href}});
+ const {data,error}=await window.divisionSupabase.auth.signUp({email,password,options:{data:{username,first_name,last_name},emailRedirectTo:new URL("./index.html",window.location.href).href}});
  setBusy(signupForm,false);
  if(error){showMessage(error.message,"error");return;}
  if(data.session&&data.user)showSignedIn(data.user);
