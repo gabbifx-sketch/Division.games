@@ -1059,40 +1059,50 @@ else if (game === "Davo") {
 // =========================================
 
 else {
-
-    title.innerText =
-        "No game found";
-
-
-    gameDetails.innerText =
-        "No game found";
-
-
-    gameDescription.innerText =
-        "The game you are looking for could not be found.";
-
-
-    gameDeveloper.innerText =
-        "Unknown";
-
-
-    gameGenre.innerText =
-        "Unknown";
-
-
-    gamePlatform.innerText =
-        "Web Browser";
-
-
-    howToPlay.innerText =
-        "Return to the Division home page and choose another game.";
-
-
-    document.title =
-        "Game Not Found - Division";
-
+    // Load games created through the admin dashboard from Supabase.
+    (async function loadAdminAddedGame() {
+        const client = window.divisionSupabase;
+        if (!client || !game) return;
+        try {
+            const { data: row, error } = await client.from("games")
+                .select("title,description,instructions,controls,developer,embed_url,thumbnail_url,tags,is_published")
+                .eq("title", game).eq("is_published", true).maybeSingle();
+            if (error) throw error;
+            if (!row || !row.embed_url) {
+                title.innerText = "No game found";
+                gameDetails.innerText = "No game found";
+                gameDescription.innerText = "This game is unavailable or has not been published.";
+                gameDeveloper.innerText = "Unknown";
+                gameGenre.innerText = "Unknown";
+                if (gameRelease) gameRelease.innerText = "Web Browser";
+                howToPlay.innerText = "Return to the Division home page and choose another game.";
+                document.title = "Game Not Found - Division";
+                return;
+            }
+            title.innerText = row.title;
+            gameDetails.innerText = row.title;
+            gameDescription.innerText = row.description || "Play " + row.title + " directly in your browser.";
+            gameDeveloper.innerText = row.developer || "Not specified";
+            gameGenre.innerText = Array.isArray(row.tags) && row.tags.length ? row.tags.join(" / ") : "Browser Game";
+            if (gameRelease) gameRelease.innerText = "Web Browser";
+            howToPlay.innerText = row.instructions || "Follow the instructions shown in the game.";
+            if (gameControls) gameControls.textContent = row.controls || "Use the controls shown in the game.";
+            frame.src = row.embed_url;
+            document.title = row.title + " - Division";
+            if (gameIcon && row.thumbnail_url) {
+                const image = document.createElement("img");
+                image.className = "game-icon-img-work";
+                image.src = row.thumbnail_url;
+                image.alt = row.title;
+                gameIcon.replaceChildren(image);
+            }
+        } catch (error) {
+            console.error("DIVISION: Could not load this game from Supabase:", error);
+            title.innerText = "Game unavailable";
+            gameDescription.innerText = "We couldn't load this game right now. Please try again later.";
+        }
+    })();
 }
-
 
 // =========================================
 // PREPARE LOADING SCREEN
