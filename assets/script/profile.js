@@ -12,6 +12,13 @@ function showMessage(text, type = "") {
 function initials(name) {
  return (name || "D").trim().slice(0, 1).toUpperCase() || "D";
 }
+
+async function loadPlayerGameLists(){
+ const render=(el,rows,empty)=>{el.innerHTML="";const list=(rows||[]).filter(x=>x.games);if(!list.length){const p=document.createElement("p");p.className="library-empty";p.textContent=empty;el.append(p);return;}list.forEach(row=>{const g=row.games,a=document.createElement("a");a.className="player-game-card";a.href="./play.html?game="+encodeURIComponent(g.title);const img=document.createElement("img");img.src=g.thumbnail_url||"";img.alt=g.title;img.loading="lazy";const span=document.createElement("span");span.textContent=g.title;a.append(img,span);el.append(a);});};
+ const [fav,recent]=await Promise.all([client.from("favorites").select("created_at,games(id,title,slug,thumbnail_url)").eq("user_id",currentUser.id).order("created_at",{ascending:false}),client.from("recently_played").select("last_played_at,games(id,title,slug,thumbnail_url)").eq("user_id",currentUser.id).order("last_played_at",{ascending:false}).limit(12)]);
+ render($("favorite-games"),fav.data,fav.error?"Could not load favourites.":"No favourites yet. Save games from their play pages.");
+ render($("recent-games"),recent.data,recent.error?"Could not load recent games.":"Games you play will appear here.");
+}
 async function loadProfile() {
  if (!client) {
   showMessage("The account connection did not load. Refresh the page.", "error");
@@ -38,6 +45,7 @@ async function loadProfile() {
  $("profile-status").textContent = profile.status || "active";
  $("username").value = profile.username || "";
  $("bio").value = profile.bio || "";
+ await loadPlayerGameLists();
 }
 form.addEventListener("submit", async event => {
  event.preventDefault();
