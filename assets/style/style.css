@@ -2181,3 +2181,70 @@ header {
     }
 
 }
+
+/* =========================================================
+   RESPONSIVE REFINEMENT — DIVISION HOME
+   Keeps the existing visual identity while tightening layout
+   across phones, tablets and wide screens.
+========================================================= */
+html { width: 100%; overflow-x: clip; }
+body { width: 100%; min-width: 0; overflow-x: clip; }
+img, video, iframe { max-width: 100%; }
+button, a, input { -webkit-tap-highlight-color: transparent; }
+.display-games, .categories-grid, .footer-main { min-width: 0; }
+.display-games { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.hero-game-card { min-width: 0; }
+.hero-game-card img { display: block; width: 100%; }
+.categories-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.category-card { min-width: 0; }
+.search-box { max-height: calc(100dvh - 32px); overflow-y: auto; }
+.search-results { min-width: 0; }
+.search-result, .search-result-info { min-width: 0; }
+.footer-column, .footer-brand { min-width: 0; overflow-wrap: anywhere; }
+
+@media (min-width: 1200px) {
+  .display-games { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .categories-section, .about-division, .footer-main {
+    max-width: 1240px;
+  }
+}
+
+@media (max-width: 900px) {
+  .display-games { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .categories-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+@media (max-width: 640px) {
+  header { width: 100%; padding-left: 12px; padding-right: 12px; gap: 10px; }
+  .display-games {
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .hero-game-card { width: 100%; min-width: 0; }
+  .hero-game-card img { aspect-ratio: 1.45 / 1; object-fit: cover; }
+  .categories-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .category-card { min-height: 96px; }
+  .about-division { max-width: none; }
+  .footer-main { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .search-overlay { padding-left: 10px; padding-right: 10px; }
+  .search-box { width: 100%; }
+}
+
+@media (max-width: 360px) {
+  header { gap: 6px; padding-left: 8px; padding-right: 8px; }
+  .display-games { gap: 7px; padding-left: 8px; padding-right: 8px; }
+  .hero-game-card p { overflow-wrap: anywhere; }
+  .footer-main { column-gap: 10px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
