@@ -776,13 +776,15 @@ footerCategories.forEach(link => {
     function updateAccountLink(user) {
         if (!user) {
             accountLink.textContent = "Account";
+            accountLink.href = "./auth.html";
             accountLink.title = "Sign in or create an account";
             return;
         }
 
         const username = user.user_metadata?.username;
         accountLink.textContent = username || "My Account";
-        accountLink.title = "Signed in as " + (user.email || username || "player");
+        accountLink.href = "./profile.html";
+        accountLink.title = "Open your DIVISION player profile";
     }
 
     supabaseClient.auth.getSession().then(({ data, error }) => {
