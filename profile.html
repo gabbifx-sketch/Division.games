@@ -17,11 +17,22 @@
 <div class="profile-topline"><span class="eyebrow">PLAYER AREA</span><h1>Your profile</h1><p>Manage your DIVISION player details.</p></div>
 <section class="profile-card">
 <div class="profile-identity">
-<div class="avatar" id="profile-avatar">D</div>
+<div class="avatar" id="profile-avatar" aria-label="Profile picture or initials">D</div>
 <div class="identity-copy"><h2 id="profile-username">Loading player...</h2><p id="profile-email">Checking your account</p><span class="status-pill" id="profile-status">Loading</span></div>
+</div>
+<div class="avatar-controls">
+<label for="avatar-file">Profile picture</label>
+<input id="avatar-file" type="file" accept="image/png,image/jpeg,image/webp">
+<small>JPG, PNG or WebP. Maximum file size: 5 MB.</small>
+<button type="button" id="upload-avatar">Upload picture</button>
+<button type="button" id="remove-avatar" class="secondary-button" hidden>Remove picture</button>
 </div>
 <div class="profile-divider"></div>
 <form id="profile-form" class="profile-form">
+<label for="first-name">First name</label>
+<input id="first-name" name="first_name" type="text" maxlength="50" autocomplete="given-name" placeholder="First name">
+<label for="last-name">Last name</label>
+<input id="last-name" name="last_name" type="text" maxlength="50" autocomplete="family-name" placeholder="Last name">
 <label for="username">Username</label>
 <input id="username" name="username" type="text" minlength="3" maxlength="20" pattern="[A-Za-z0-9_]+" autocomplete="username" required>
 <small>3–20 characters. Letters, numbers and underscores only.</small>
@@ -31,7 +42,9 @@
 </form>
 <div class="profile-actions"><a href="./index.html">Explore games</a><button type="button" id="profile-signout">Sign out</button></div>
 </section>
-<section class="library-section"><h2>My favourites</h2><div id="favorite-games" class="player-game-grid"><p class="library-empty">Loading favourites...</p></div></section><section class="library-section"><h2>Recently played</h2><div id="recent-games" class="player-game-grid"><p class="library-empty">Loading recent games...</p></div></section><p class="profile-note">Your email is used for account access and cannot be changed here.</p>
+<section class="library-section"><h2>My favourites</h2><div id="favorite-games" class="player-game-grid"><p class="library-empty">Loading favourites...</p></div></section>
+<section class="library-section"><h2>Recently played</h2><div id="recent-games" class="player-game-grid"><p class="library-empty">Loading recent games...</p></div></section>
+<p class="profile-note">Your email is used for account access and cannot be changed here.</p>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="./assets/script/supabase-client.js"></script>
