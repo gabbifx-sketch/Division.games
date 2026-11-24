@@ -1636,3 +1636,115 @@ loadMoreGames(game);
         setMessage("Could not load player features: " + error.message);
     }
 })();
+
+
+// DIVISION GAME COMMENTS
+(async function initializeGameComments() {
+    const client = window.divisionSupabase;
+    const section = document.getElementById("division-comments");
+    if (!client || !section || !game) return;
+    const form = document.getElementById("comment-form");
+    const input = document.getElementById("comment-input");
+    const submit = document.getElementById("comment-submit");
+    const status = document.getElementById("comment-status");
+    const list = document.getElementById("comments-list");
+    const countLabel = document.getElementById("comments-count");
+
+    try {
+        const { data: gameRow, error: gameError } = await client.from("games")
+            .select("id").eq("title", game).eq("is_published", true).maybeSingle();
+        if (gameError) throw gameError;
+        if (!gameRow) { list.textContent = "Comments are unavailable for this game."; return; }
+
+        const { data: sessionData } = await client.auth.getSession();
+        const user = sessionData.session?.user || null;
+        if (user) {
+            submit.disabled = false;
+            status.textContent = "Keep it respectful. Maximum 2,000 characters.";
+        } else {
+            input.disabled = true;
+            submit.textContent = "Sign in to comment";
+            submit.disabled = false;
+            status.textContent = "You need an account to join the discussion.";
+            submit.addEventListener("click", event => {
+                event.preventDefault();
+                window.location.href = "./auth.html";
+            });
+        }
+
+        async function loadComments() {
+            list.textContent = "Loading comments...";
+            const { data, error } = await client.from("comments")
+                .select("id,body,created_at,user_id,profiles(username)")
+                .eq("game_id", gameRow.id).order("created_at", { ascending: false });
+            if (error) throw error;
+            countLabel.textContent = data.length + (data.length === 1 ? " comment" : " comments");
+            list.replaceChildren();
+            if (!data.length) {
+                const empty = document.createElement("p");
+                empty.className = "comments-empty";
+                empty.textContent = "No comments yet. Start the conversation.";
+                list.appendChild(empty);
+                return;
+            }
+            data.forEach(comment => {
+                const card = document.createElement("article");
+                card.className = "comment-card";
+                const top = document.createElement("div");
+                top.className = "comment-card-top";
+                const author = document.createElement("strong");
+                author.textContent = comment.profiles?.username || "DIVISION player";
+                const date = document.createElement("time");
+                date.dateTime = comment.created_at;
+                date.textContent = new Date(comment.created_at).toLocaleString();
+                top.append(author, date);
+                const body = document.createElement("p");
+                body.className = "comment-body";
+                body.textContent = comment.body;
+                card.append(top, body);
+                if (user && comment.user_id === user.id) {
+                    const remove = document.createElement("button");
+                    remove.type = "button";
+                    remove.className = "comment-delete";
+                    remove.textContent = "Delete";
+                    remove.addEventListener("click", async () => {
+                        remove.disabled = true;
+                        const { error: deleteError } = await client.from("comments")
+                            .delete().eq("id", comment.id).eq("user_id", user.id);
+                        if (deleteError) {
+                            status.textContent = "Could not delete comment: " + deleteError.message;
+                            remove.disabled = false;
+                            return;
+                        }
+                        await loadComments();
+                    });
+                    card.appendChild(remove);
+                }
+                list.appendChild(card);
+            });
+        }
+
+        if (user) form.addEventListener("submit", async event => {
+            event.preventDefault();
+            const body = input.value.trim();
+            if (!body) { status.textContent = "Write a comment first."; return; }
+            submit.disabled = true;
+            status.textContent = "Posting...";
+            const { error } = await client.from("comments").insert({ user_id: user.id, game_id: gameRow.id, body });
+            if (error) {
+                status.textContent = "Could not post comment: " + error.message;
+                submit.disabled = false;
+                return;
+            }
+            input.value = "";
+            status.textContent = "Comment posted.";
+            submit.disabled = false;
+            await loadComments();
+        });
+
+        await loadComments();
+    } catch (error) {
+        console.error("DIVISION comments:", error);
+        list.textContent = "Could not load comments: " + error.message;
+    }
+})();
