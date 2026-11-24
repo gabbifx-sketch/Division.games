@@ -762,32 +762,64 @@ footerCategories.forEach(link => {
 });
 
 // =========================================
-// ACCOUNT NAVIGATION
-// Shows the signed-in player's username.
-// The Account page contains the sign-out control.
+// ACCOUNT AVATAR — homepage header
 // =========================================
 
 (function initializeDivisionAccountNav() {
     const accountLink = document.getElementById("division-account-link");
-    const supabaseClient = window.divisionSupabase;
+    const client = window.divisionSupabase;
+    if (!accountLink || !client) return;
 
-    if (!accountLink || !supabaseClient) return;
+    function initialsFrom(profile, user) {
+        const first = (profile?.first_name || user?.user_metadata?.first_name || "").trim();
+        const last = (profile?.last_name || user?.user_metadata?.last_name || "").trim();
+        if (first || last) {
+            return ((first[0] || "") + (last[0] || "")).toUpperCase() || "?";
+        }
+        const username = (profile?.username || user?.user_metadata?.username || "").trim();
+        if (username) return username.slice(0, 2).toUpperCase();
+        const email = user?.email || "";
+        return email ? email.slice(0, 2).toUpperCase() : "?";
+    }
 
-    function updateAccountLink(user) {
+    async function updateAccountLink(user) {
+        accountLink.replaceChildren();
         if (!user) {
-            accountLink.textContent = "Account";
+            const fallback = document.createElement("span");
+            fallback.className = "division-avatar-fallback";
+            fallback.textContent = "?";
+            accountLink.appendChild(fallback);
             accountLink.href = "./auth.html";
             accountLink.title = "Sign in or create an account";
+            accountLink.setAttribute("aria-label", "Sign in or create an account");
             return;
         }
 
-        const username = user.user_metadata?.username;
-        accountLink.textContent = username || "My Account";
         accountLink.href = "./profile.html";
         accountLink.title = "Open your DIVISION player profile";
+        accountLink.setAttribute("aria-label", "Open your DIVISION player profile");
+
+        let profile = null;
+        const { data } = await client.from("profiles")
+            .select("first_name,last_name,username,avatar_url")
+            .eq("user_id", user.id).maybeSingle();
+        profile = data || null;
+
+        if (profile?.avatar_url) {
+            const avatar = document.createElement("img");
+            avatar.className = "division-avatar-image";
+            avatar.src = profile.avatar_url;
+            avatar.alt = "";
+            accountLink.appendChild(avatar);
+        } else {
+            const fallback = document.createElement("span");
+            fallback.className = "division-avatar-fallback";
+            fallback.textContent = initialsFrom(profile, user);
+            accountLink.appendChild(fallback);
+        }
     }
 
-    supabaseClient.auth.getSession().then(({ data, error }) => {
+    client.auth.getSession().then(({ data, error }) => {
         if (error) {
             console.error("DIVISION: Could not read account session:", error.message);
             return;
@@ -795,7 +827,7 @@ footerCategories.forEach(link => {
         updateAccountLink(data.session?.user || null);
     });
 
-    supabaseClient.auth.onAuthStateChange((_event, session) => {
+    client.auth.onAuthStateChange((_event, session) => {
         updateAccountLink(session?.user || null);
     });
 })();
