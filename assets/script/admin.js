@@ -76,11 +76,20 @@ async function loadDashboard() {
   setStat("stat-plays", games.reduce((sum,g) => sum + Number(g.play_count || 0), 0));
   $("game-category").innerHTML = '<option value="">No category</option>' +
     categories.map(c => '<option value="' + escapeHtml(c.id) + '">' + escapeHtml(c.name) + '</option>').join("");
+  $("game-category-filter").innerHTML = '<option value="">All categories</option>' +
+    categories.map(c => '<option value="' + escapeHtml(c.id) + '">' + escapeHtml(c.name) + '</option>').join("");
   renderGames();
 }
 function renderGames() {
   const term = $("game-search").value.trim().toLowerCase();
-  const filtered = games.filter(g => (g.title + " " + g.slug).toLowerCase().includes(term));
+  const status = $("game-status-filter").value;
+  const categoryId = $("game-category-filter").value;
+  const filtered = games.filter(g => {
+    const matchesSearch = (g.title + " " + g.slug).toLowerCase().includes(term);
+    const matchesStatus = status === "all" || (status === "published" ? g.is_published : !g.is_published);
+    const matchesCategory = !categoryId || g.category_id === categoryId;
+    return matchesSearch && matchesStatus && matchesCategory;
+  });
   $("games-table").innerHTML = filtered.length ? filtered.map(g => {
     const thumb = g.thumbnail_url
       ? '<img src="' + escapeHtml(g.thumbnail_url) + '" alt="" loading="lazy" onerror="this.style.visibility=\'hidden\'">'
@@ -185,6 +194,8 @@ $("game-title").addEventListener("input", () => {
 });
 $("game-form").addEventListener("submit", saveGame);
 $("game-search").addEventListener("input", renderGames);
+$("game-status-filter").addEventListener("change", renderGames);
+$("game-category-filter").addEventListener("change", renderGames);
 $("games-table").addEventListener("click", (event) => {
   const editButton = event.target.closest("[data-edit]");
   const toggleButton = event.target.closest("[data-toggle]");
