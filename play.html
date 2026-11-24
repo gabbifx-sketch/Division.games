@@ -375,6 +375,25 @@
 
 
 
+        <!-- COMMENTS -->
+        <section class="division-comments" id="division-comments">
+            <div class="comments-heading">
+                <h2>Comments</h2>
+                <span id="comments-count">0 comments</span>
+            </div>
+            <form id="comment-form" class="comment-form">
+                <label for="comment-input">Join the discussion</label>
+                <textarea id="comment-input" maxlength="2000" rows="3" placeholder="Share your thoughts about this game..." required></textarea>
+                <div class="comment-form-bottom">
+                    <span id="comment-status" role="status" aria-live="polite">Sign in to leave a comment.</span>
+                    <button type="submit" id="comment-submit" disabled>Post comment</button>
+                </div>
+            </form>
+            <div id="comments-list" class="comments-list" aria-live="polite">
+                <p class="comments-empty">Loading comments...</p>
+            </div>
+        </section>
+
         <!-- NOTICE -->
 
         <div class="game-notice">
