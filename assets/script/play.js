@@ -1709,7 +1709,8 @@ loadMoreGames(game);
                         || username.slice(0, 2).toUpperCase();
                 }
                 const author = document.createElement("strong");
-                author.textContent = comment.profiles?.username || "DIVISION player";
+                const displayName = [comment.profiles?.first_name, comment.profiles?.last_name].filter(Boolean).join(" ").trim();
+                author.textContent = displayName || comment.profiles?.username || "DIVISION player";
                 authorGroup.append(avatar, author);
                 const date = document.createElement("time");
                 date.dateTime = comment.created_at;
