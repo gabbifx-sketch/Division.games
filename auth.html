@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090909">
+<title>Account - DIVISION</title>
+<link rel="icon" href="assets/img/ChatGPT Image Sep 7, 2026, 01_48_33 AM.png">
+<link rel="stylesheet" href="./assets/style/auth.css">
+</head>
+<body>
+<header class="auth-header">
+<a class="auth-brand" href="./index.html"><img src="./assets/img/division_logo.png" alt="DIVISION"></a>
+<a class="back-home" href="./index.html">Back to games</a>
+</header>
+<main class="auth-main">
+<section class="auth-card">
+<div class="auth-heading">
+<span class="eyebrow">YOUR DIVISION ACCOUNT</span>
+<h1 id="auth-title">Welcome back</h1>
+<p id="auth-subtitle">Sign in to continue to your games.</p>
+</div>
+<div class="auth-tabs" role="tablist" aria-label="Account options">
+<button class="auth-tab active" id="login-tab" type="button" role="tab" aria-selected="true">Sign in</button>
+<button class="auth-tab" id="signup-tab" type="button" role="tab" aria-selected="false">Create account</button>
+</div>
+<form id="login-form" class="auth-form">
+<label for="login-email">Email address</label>
+<input id="login-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+<label for="login-password">Password</label>
+<input id="login-password" name="password" type="password" autocomplete="current-password" placeholder="Your password" required>
+<button class="auth-submit" type="submit">Sign in</button>
+</form>
+<form id="signup-form" class="auth-form" hidden>
+<label for="signup-username">Username</label>
+<input id="signup-username" name="username" type="text" minlength="3" maxlength="20" pattern="[A-Za-z0-9_]+" autocomplete="username" placeholder="Choose a username" required>
+<small class="field-hint">3–20 characters. Letters, numbers and underscores only.</small>
+<label for="signup-email">Email address</label>
+<input id="signup-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+<label for="signup-password">Password</label>
+<input id="signup-password" name="password" type="password" minlength="8" autocomplete="new-password" placeholder="At least 8 characters" required>
+<button class="auth-submit" type="submit">Create account</button>
+</form>
+<p id="auth-message" class="auth-message" role="status" aria-live="polite"></p>
+<div id="signed-in-panel" class="signed-in-panel" hidden>
+<p>You're already signed in as</p>
+<strong id="signed-in-email"></strong>
+<a class="auth-submit signed-in-link" href="./index.html">Continue to DIVISION</a>
+<button id="signout-button" class="signout-button" type="button">Sign out</button>
+</div>
+<p class="auth-footnote">By creating an account, you agree to use DIVISION respectfully.</p>
+</section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./assets/script/supabase-client.js"></script>
+<script src="./assets/script/auth.js"></script>
+</body>
+</html>
