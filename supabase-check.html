@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIVISION - Backend Check</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+            background: #111111;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+        }
+        main {
+            width: min(100%, 520px);
+            padding: 28px;
+            border: 1px solid #303030;
+            border-radius: 18px;
+            background: #191919;
+        }
+        h1 { margin-top: 0; letter-spacing: 2px; }
+        #status { margin: 20px 0 10px; font-size: 18px; font-weight: 700; }
+        #details { color: #bdbdbd; line-height: 1.6; overflow-wrap: anywhere; }
+        a { color: #ffffff; }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>DIVISION</h1>
+        <p>Supabase backend connection test</p>
+        <div id="status">Checking connection...</div>
+        <p id="details">Contacting your DIVISION database. This check only reads the public categories table.</p>
+        <p><a href="./index.html">Return to DIVISION</a></p>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./assets/script/supabase-client.js"></script>
+    <script>
+        const statusElement = document.getElementById("status");
+        const detailsElement = document.getElementById("details");
+
+        if (window.divisionBackendReady) {
+            window.divisionBackendReady.then((result) => {
+                if (result.connected) {
+                    statusElement.textContent = "Connection successful";
+                    statusElement.style.color = "#65d98b";
+                    detailsElement.textContent = "The website reached Supabase and successfully read the categories table. Your browser client is configured.";
+                } else {
+                    statusElement.textContent = "Connection failed";
+                    statusElement.style.color = "#ff7777";
+                    detailsElement.textContent = result.error || "Unknown connection error. Check the Supabase URL, publishable key, and API settings.";
+                }
+            });
+        } else {
+            statusElement.textContent = "Connection could not start";
+            statusElement.style.color = "#ff7777";
+            detailsElement.textContent = "The Supabase client did not initialize. Check whether the CDN script loaded.";
+        }
+    </script>
+</body>
+</html>
