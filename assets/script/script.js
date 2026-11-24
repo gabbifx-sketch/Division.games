@@ -760,3 +760,41 @@ footerCategories.forEach(link => {
         }, 100);
     });
 });
+
+// =========================================
+// ACCOUNT NAVIGATION
+// Shows the signed-in player's username.
+// The Account page contains the sign-out control.
+// =========================================
+
+(function initializeDivisionAccountNav() {
+    const accountLink = document.getElementById("division-account-link");
+    const supabaseClient = window.divisionSupabase;
+
+    if (!accountLink || !supabaseClient) return;
+
+    function updateAccountLink(user) {
+        if (!user) {
+            accountLink.textContent = "Account";
+            accountLink.title = "Sign in or create an account";
+            return;
+        }
+
+        const username = user.user_metadata?.username;
+        accountLink.textContent = username || "My Account";
+        accountLink.title = "Signed in as " + (user.email || username || "player");
+    }
+
+    supabaseClient.auth.getSession().then(({ data, error }) => {
+        if (error) {
+            console.error("DIVISION: Could not read account session:", error.message);
+            return;
+        }
+        updateAccountLink(data.session?.user || null);
+    });
+
+    supabaseClient.auth.onAuthStateChange((_event, session) => {
+        updateAccountLink(session?.user || null);
+    });
+})();
+
