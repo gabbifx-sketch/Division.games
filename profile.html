@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090909">
+<title>Player Profile - DIVISION</title>
+<link rel="icon" href="./assets/img/ChatGPT Image Sep 7, 2026, 01_48_33 AM.png">
+<link rel="stylesheet" href="./assets/style/profile.css">
+</head>
+<body>
+<header class="profile-header">
+<a class="profile-brand" href="./index.html"><img src="./assets/img/division_logo.png" alt="DIVISION"></a>
+<a class="back-home" href="./index.html">Back to games</a>
+</header>
+<main class="profile-main">
+<div class="profile-topline"><span class="eyebrow">PLAYER AREA</span><h1>Your profile</h1><p>Manage your DIVISION player details.</p></div>
+<section class="profile-card">
+<div class="profile-identity">
+<div class="avatar" id="profile-avatar">D</div>
+<div class="identity-copy"><h2 id="profile-username">Loading player...</h2><p id="profile-email">Checking your account</p><span class="status-pill" id="profile-status">Loading</span></div>
+</div>
+<div class="profile-divider"></div>
+<form id="profile-form" class="profile-form">
+<label for="username">Username</label>
+<input id="username" name="username" type="text" minlength="3" maxlength="20" pattern="[A-Za-z0-9_]+" autocomplete="username" required>
+<small>3–20 characters. Letters, numbers and underscores only.</small>
+<label for="bio">About you</label>
+<textarea id="bio" name="bio" maxlength="160" rows="4" placeholder="Tell players a little about yourself (optional)."></textarea>
+<div class="form-footer"><span id="profile-message" role="status" aria-live="polite"></span><button type="submit" id="save-profile">Save changes</button></div>
+</form>
+<div class="profile-actions"><a href="./index.html">Explore games</a><button type="button" id="profile-signout">Sign out</button></div>
+</section>
+<p class="profile-note">Your email is used for account access and cannot be changed here.</p>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./assets/script/supabase-client.js"></script>
+<script src="./assets/script/profile.js"></script>
+</body>
+</html>
