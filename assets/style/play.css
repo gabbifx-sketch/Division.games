@@ -1490,3 +1490,59 @@ kbd {
         left: 8px;
     }
 }
+
+/* =========================================================
+   RESPONSIVE REFINEMENT — DIVISION GAME PLAYER
+========================================================= */
+html { width: 100%; overflow-x: clip; }
+body { width: 100%; min-width: 0; overflow-x: clip; }
+.play-container { width: min(100% - 32px, 1200px); margin-inline: auto; }
+.game-top, .game-information, .game-description { min-width: 0; }
+.game-box { width: 100%; max-width: 100%; min-width: 0; }
+.game-box iframe { display: block; width: 100%; max-width: 100%; }
+.gameplay-video { width: min(100%, 900px); }
+.game-meta { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.meta-item { min-width: 0; overflow-wrap: anywhere; }
+.controls-list { min-width: 0; }
+.game-details { min-width: 0; }
+.game-details-text { min-width: 0; }
+
+@media (max-width: 850px) {
+  .play-container { width: calc(100% - 28px); }
+  .game-box { height: min(68vw, 560px); min-height: 300px; }
+  .game-meta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 600px) {
+  .play-header { padding-left: 12px; padding-right: 12px; gap: 8px; }
+  .play-container { width: calc(100% - 20px); margin-top: 16px; }
+  .back-button { flex: 0 0 auto; }
+  .division-logo { min-width: 0; }
+  .header-fullscreen { padding: 9px 10px; }
+  .header-fullscreen span { display: none; }
+  .game-top { margin-bottom: 12px; }
+  .game-top h1 { font-size: clamp(20px, 6vw, 28px); overflow-wrap: anywhere; }
+  .game-box {
+    height: min(62vh, 440px);
+    min-height: 260px;
+    border-radius: 10px;
+  }
+  .game-information { gap: 10px; align-items: center; }
+  .game-details { flex: 1; min-width: 0; }
+  .game-details-text h2 { overflow-wrap: anywhere; }
+  .game-description { padding: 16px; margin-top: 18px; }
+  .game-description h2 { font-size: 18px; }
+  .game-description p { font-size: 14px; }
+  .game-meta { grid-template-columns: 1fr; gap: 9px; }
+  .meta-item { padding: 12px; }
+  .gameplay-section { margin-top: 22px; }
+  .gameplay-video { width: 100%; }
+  .game-notice { padding: 12px; line-height: 1.5; }
+}
+
+@media (max-width: 360px) {
+  .play-container { width: calc(100% - 16px); }
+  .game-box { min-height: 230px; }
+  .game-description { padding: 13px; }
+  .division-logo { font-size: 13px; }
+}
