@@ -459,6 +459,23 @@ categoryCards.forEach(card => {
 // START DIVISION HOMEd
 // =========================================
 
+function renderCuratedSections() {
+    const sections = [
+        { id: "featured-games-grid", flag: "isFeatured", section: "featured-games-section" },
+        { id: "popular-games-grid", flag: "isPopular", section: "popular-games-section" },
+        { id: "recommended-games-grid", flag: "isRecommended", section: "recommended-games-section" }
+    ];
+    sections.forEach(({ id, flag, section }) => {
+        const grid = document.getElementById(id);
+        const wrapper = document.getElementById(section);
+        if (!grid || !wrapper) return;
+        const selectedGames = displayHomeGames.filter(game => game[flag]);
+        grid.innerHTML = "";
+        selectedGames.forEach(game => grid.appendChild(createGameCard(game)));
+        wrapper.hidden = selectedGames.length === 0;
+    });
+}
+
 async function loadPublishedGames() {
     if (!window.divisionSupabase) {
         console.error("DIVISION: Supabase is unavailable.");
@@ -468,7 +485,7 @@ async function loadPublishedGames() {
     try {
         const [gameResult, categoryResult] = await Promise.all([
             window.divisionSupabase.from("games")
-                .select("id,title,slug,thumbnail_url,category_id,tags,is_published")
+                .select("id,title,slug,thumbnail_url,category_id,tags,is_published,is_featured,is_popular,is_recommended")
                 .eq("is_published", true)
                 .order("created_at", { ascending: false }),
             window.divisionSupabase.from("categories").select("id,name")
@@ -481,12 +498,16 @@ async function loadPublishedGames() {
             id: row.title,
             slug: row.slug,
             img: row.thumbnail_url || "",
+            isFeatured: !!row.is_featured,
+            isPopular: !!row.is_popular,
+            isRecommended: !!row.is_recommended,
             categories: [
                 ...(row.category_id && categoryNames.has(row.category_id) ? [categoryNames.get(row.category_id)] : []),
                 ...(Array.isArray(row.tags) ? row.tags : [])
             ]
         }));
         displayAllGames();
+        renderCuratedSections();
     } catch (error) {
         console.error("DIVISION: Could not load published games:", error);
         if (gamesContainer) gamesContainer.textContent = "Could not load games. Please refresh the page.";
