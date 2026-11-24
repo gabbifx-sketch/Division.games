@@ -1692,8 +1692,10 @@ loadMoreGames(game);
                 card.className = "comment-card";
                 const top = document.createElement("div");
                 top.className = "comment-card-top";
-                const authorGroup = document.createElement("div");
+                const authorGroup = document.createElement("a");
                 authorGroup.className = "comment-author";
+                authorGroup.href = "./player.html?id=" + encodeURIComponent(comment.user_id);
+                authorGroup.title = "View player profile";
                 const avatar = document.createElement("span");
                 avatar.className = "comment-avatar";
                 if (comment.profiles?.avatar_url) {
