@@ -1456,17 +1456,183 @@ function loadMoreGames(gameName) {
 
 loadMoreGames(game);
 
-// Player favourites and recently played
-(async function(){
- const client=window.divisionSupabase,button=document.getElementById("favorite-game-button"),message=document.getElementById("favorite-game-message");
- if(!client||!button||!game)return;
- const {data:s}=await client.auth.getSession(),user=s?.session?.user;
- const {data:g,error:ge}=await client.from("games").select("id,title").eq("title",game).eq("is_published",true).maybeSingle();
- if(ge||!g){message.textContent="This game is not linked to the player catalogue yet.";return;}
- if(!user){button.disabled=false;button.addEventListener("click",()=>location.href="./auth.html");message.textContent="Sign in to save this game.";return;}
- const {error:he}=await client.from("recently_played").upsert({user_id:user.id,game_id:g.id,last_played_at:new Date().toISOString()},{onConflict:"user_id,game_id"});
- if(he)console.warn("Recent history:",he.message);
- async function sync(){const {data,error}=await client.from("favorites").select("game_id").eq("user_id",user.id).eq("game_id",g.id).maybeSingle();if(error){message.textContent="Could not check favourite status.";button.disabled=true;return;}const saved=!!data;button.textContent=saved?"♥ Saved to favourites":"♡ Add to favourites";button.setAttribute("aria-pressed",String(saved));button.disabled=false;}
- button.addEventListener("click",async()=>{button.disabled=true;const {data:old,error}=await client.from("favorites").select("game_id").eq("user_id",user.id).eq("game_id",g.id).maybeSingle();if(error){message.textContent=error.message;button.disabled=false;return;}const result=old?await client.from("favorites").delete().eq("user_id",user.id).eq("game_id",g.id):await client.from("favorites").insert({user_id:user.id,game_id:g.id});if(result.error){message.textContent=result.error.message;button.disabled=false;return;}await sync();message.textContent=old?"Removed from favourites.":"Added to favourites.";});
- await sync();
+// Player features: favourites, likes, recently played, and play counts.
+(async function initializePlayerGameFeatures() {
+    const client = window.divisionSupabase;
+    const favoriteButton = document.getElementById("favorite-game-button");
+    const favoriteMessage = document.getElementById("favorite-game-message");
+    const likeButton = document.getElementById("like-game-button");
+    const likeCount = document.getElementById("like-game-count");
+    const playCount = document.getElementById("game-play-count");
+
+    if (!client || !game) return;
+
+    const setMessage = (message) => {
+        if (favoriteMessage) favoriteMessage.textContent = message;
+    };
+
+    try {
+        const { data: gameRecord, error: gameError } = await client
+            .from("games")
+            .select("id,title,play_count")
+            .eq("title", game)
+            .eq("is_published", true)
+            .maybeSingle();
+
+        if (gameError) throw gameError;
+        if (!gameRecord) {
+            setMessage("This game is not linked to the player catalogue yet.");
+            if (favoriteButton) favoriteButton.disabled = true;
+            if (likeButton) likeButton.disabled = true;
+            return;
+        }
+
+        const gameId = gameRecord.id;
+        if (playCount) playCount.textContent = Number(gameRecord.play_count || 0).toLocaleString();
+
+        // Count this game-page visit through a restricted database function.
+        const { data: newPlayCount, error: playCountError } = await client
+            .rpc("increment_game_play_count", { p_game_id: gameId });
+
+        if (playCountError) {
+            console.warn("DIVISION play count:", playCountError.message);
+        } else if (playCount) {
+            playCount.textContent = Number(newPlayCount).toLocaleString();
+        }
+
+        const { data: sessionData, error: sessionError } = await client.auth.getSession();
+        if (sessionError) throw sessionError;
+        const user = sessionData.session?.user || null;
+
+        if (user) {
+            const { error: recentError } = await client
+                .from("recently_played")
+                .upsert({
+                    user_id: user.id,
+                    game_id: gameId,
+                    last_played_at: new Date().toISOString()
+                }, { onConflict: "user_id,game_id" });
+
+            if (recentError) console.warn("DIVISION recently played:", recentError.message);
+        }
+
+        // Favourites
+        if (favoriteButton) {
+            if (!user) {
+                favoriteButton.disabled = false;
+                favoriteButton.addEventListener("click", () => {
+                    window.location.href = "./auth.html";
+                });
+                setMessage("Sign in to save this game.");
+            } else {
+                async function syncFavorite() {
+                    const { data, error } = await client
+                        .from("favorites")
+                        .select("game_id")
+                        .eq("user_id", user.id)
+                        .eq("game_id", gameId)
+                        .maybeSingle();
+
+                    if (error) throw error;
+                    const saved = Boolean(data);
+                    favoriteButton.textContent = saved ? "♥ Saved to favourites" : "♡ Add to favourites";
+                    favoriteButton.setAttribute("aria-pressed", String(saved));
+                    favoriteButton.disabled = false;
+                }
+
+                favoriteButton.addEventListener("click", async () => {
+                    favoriteButton.disabled = true;
+                    try {
+                        const { data: existing, error } = await client
+                            .from("favorites")
+                            .select("game_id")
+                            .eq("user_id", user.id)
+                            .eq("game_id", gameId)
+                            .maybeSingle();
+
+                        if (error) throw error;
+
+                        const result = existing
+                            ? await client.from("favorites").delete().eq("user_id", user.id).eq("game_id", gameId)
+                            : await client.from("favorites").insert({ user_id: user.id, game_id: gameId });
+
+                        if (result.error) throw result.error;
+                        await syncFavorite();
+                        setMessage(existing ? "Removed from favourites." : "Added to favourites.");
+                    } catch (error) {
+                        setMessage("Favourite error: " + error.message);
+                        favoriteButton.disabled = false;
+                    }
+                });
+
+                await syncFavorite();
+            }
+        }
+
+        // Likes
+        if (likeButton) {
+            async function syncLike() {
+                const { count, error: countError } = await client
+                    .from("likes")
+                    .select("*", { count: "exact", head: true })
+                    .eq("game_id", gameId);
+
+                if (countError) throw countError;
+                if (likeCount) likeCount.textContent = Number(count || 0).toLocaleString();
+
+                if (!user) {
+                    likeButton.textContent = "♡ Like";
+                    likeButton.disabled = false;
+                    return;
+                }
+
+                const { data: ownLike, error: ownError } = await client
+                    .from("likes")
+                    .select("game_id")
+                    .eq("user_id", user.id)
+                    .eq("game_id", gameId)
+                    .maybeSingle();
+
+                if (ownError) throw ownError;
+                likeButton.textContent = ownLike ? "♥ Liked" : "♡ Like";
+                likeButton.setAttribute("aria-pressed", String(Boolean(ownLike)));
+                likeButton.disabled = false;
+            }
+
+            likeButton.addEventListener("click", async () => {
+                if (!user) {
+                    window.location.href = "./auth.html";
+                    return;
+                }
+
+                likeButton.disabled = true;
+                try {
+                    const { data: ownLike, error } = await client
+                        .from("likes")
+                        .select("game_id")
+                        .eq("user_id", user.id)
+                        .eq("game_id", gameId)
+                        .maybeSingle();
+
+                    if (error) throw error;
+
+                    const result = ownLike
+                        ? await client.from("likes").delete().eq("user_id", user.id).eq("game_id", gameId)
+                        : await client.from("likes").insert({ user_id: user.id, game_id: gameId });
+
+                    if (result.error) throw result.error;
+                    await syncLike();
+                } catch (error) {
+                    console.error("DIVISION like error:", error);
+                    likeButton.disabled = false;
+                    likeButton.title = error.message;
+                }
+            });
+
+            await syncLike();
+        }
+    } catch (error) {
+        console.error("DIVISION player features:", error);
+        setMessage("Could not load player features: " + error.message);
+    }
 })();
