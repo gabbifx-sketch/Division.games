@@ -2286,3 +2286,95 @@ button, a, input { -webkit-tap-highlight-color: transparent; }
     .curated-games-section { width: calc(100% - 22px); margin: 26px auto; }
     .curated-games-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 }
+
+
+/* DIVISION UI POLISH — rounded surfaces and consistent spacing */
+:root {
+  --division-radius-sm: 10px;
+  --division-radius-md: 14px;
+  --division-radius-lg: 18px;
+  --division-radius-xl: 22px;
+  --division-border: #303030;
+  --division-surface: #181818;
+  --division-accent: #ff7a00;
+}
+
+/* Game cards */
+.hero-game-card,
+.curated-games-grid .hero-game-card {
+  border-radius: var(--division-radius-lg);
+  border: 1px solid var(--division-border);
+  background: var(--division-surface);
+  box-shadow: 0 5px 18px rgba(0,0,0,.16);
+}
+.hero-game-card img {
+  border-radius: calc(var(--division-radius-lg) - 1px) calc(var(--division-radius-lg) - 1px) 0 0;
+}
+.hero-game-card:hover {
+  border-color: var(--division-accent);
+  box-shadow: 0 10px 26px rgba(0,0,0,.28);
+}
+
+/* Curated collections and category tiles */
+.curated-games-section {
+  padding: 18px;
+  border: 1px solid #292929;
+  border-radius: var(--division-radius-xl);
+  background: #151515;
+}
+.curated-games-heading { margin-bottom: 18px; }
+.category-card {
+  border-radius: var(--division-radius-lg);
+  border-color: var(--division-border);
+}
+
+/* Search and interactive surfaces */
+.search-box {
+  border: 1px solid #303030;
+  border-radius: var(--division-radius-xl);
+}
+.search-input-wrapper {
+  border: 1px solid #333;
+  border-radius: var(--division-radius-md);
+}
+.search-result {
+  border: 1px solid transparent;
+  border-radius: var(--division-radius-md);
+}
+.search-result img { border-radius: 9px; }
+.search-close,
+.launch-button {
+  border-radius: var(--division-radius-md);
+}
+
+/* Account and content panels */
+.division-account-link { border-radius: 50%; }
+.about-division {
+  border: 1px solid #292929;
+  border-radius: var(--division-radius-xl);
+}
+.division-footer {
+  border-top: 1px solid #292929;
+}
+
+/* Smooth, consistent focus feedback */
+.hero-game-card:focus-visible,
+.category-card:focus-visible,
+.search-result:focus-visible,
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--division-accent);
+  outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  .curated-games-section {
+    width: calc(100% - 20px);
+    padding: 13px;
+    border-radius: var(--division-radius-lg);
+  }
+  .hero-game-card { border-radius: var(--division-radius-md); }
+  .hero-game-card img {
+    border-radius: calc(var(--division-radius-md) - 1px) calc(var(--division-radius-md) - 1px) 0 0;
+  }
+}
