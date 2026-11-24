@@ -23,3 +23,4 @@ body{min-height:100vh;background:#111;color:#fff;font-family:Arial,Helvetica,san
 .signout-button{min-height:40px;border:1px solid #393939;border-radius:8px;background:#1c1c1c;color:#ddd;font-weight:700;cursor:pointer}.signout-button:hover{border-color:#ff7a00}
 .auth-footnote{margin-top:22px;color:#686868;font-size:10px;line-height:1.5;text-align:center}
 @media(max-width:480px){.auth-header{min-height:64px;padding:8px 14px}.auth-brand{width:145px;height:44px}.auth-main{min-height:calc(100vh - 64px);padding:28px 12px}.auth-card{padding:23px 18px;border-radius:12px}.auth-heading h1{font-size:24px}}
+.auth-secondary-link{min-height:40px;display:flex;align-items:center;justify-content:center;border:1px solid #393939;border-radius:8px;color:#ddd;text-decoration:none;font-size:12px;font-weight:700}.auth-secondary-link:hover{border-color:#ff7a00}
